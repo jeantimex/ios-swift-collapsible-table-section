@@ -12,6 +12,7 @@
 		0A908DF61CFCAA9200470F33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A908DF51CFCAA9200470F33 /* Assets.xcassets */; };
 		0A908DF91CFCAA9200470F33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A908DF71CFCAA9200470F33 /* LaunchScreen.storyboard */; };
 		0A908E011CFCAC7500470F33 /* CollapsibleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A908E001CFCAC7500470F33 /* CollapsibleTableViewController.swift */; };
+		0A908E031CFCB8D600470F33 /* CollapsibleTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A908E021CFCB8D600470F33 /* CollapsibleTableViewHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		0A908DF81CFCAA9200470F33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A908DFA1CFCAA9200470F33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A908E001CFCAC7500470F33 /* CollapsibleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewController.swift; sourceTree = "<group>"; };
+		0A908E021CFCB8D600470F33 /* CollapsibleTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				0A908DF71CFCAA9200470F33 /* LaunchScreen.storyboard */,
 				0A908DFA1CFCAA9200470F33 /* Info.plist */,
 				0A908E001CFCAC7500470F33 /* CollapsibleTableViewController.swift */,
+				0A908E021CFCB8D600470F33 /* CollapsibleTableViewHeader.swift */,
 			);
 			path = "ios-swift-collapsible-table-section";
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A908E011CFCAC7500470F33 /* CollapsibleTableViewController.swift in Sources */,
+				0A908E031CFCB8D600470F33 /* CollapsibleTableViewHeader.swift in Sources */,
 				0A908DEF1CFCAA9200470F33 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,6 +294,7 @@
 				0A908DFF1CFCAA9200470F33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
