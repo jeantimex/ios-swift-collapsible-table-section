@@ -68,11 +68,10 @@ class CollapsibleTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableCellWithIdentifier("header") as! CollapsibleTableViewHeader
         
-        header.titleLabel.text = sections[section].name
         header.toggleButton.tag = section
-        header.toggleButton.addTarget(self, action: #selector(CollapsibleTableViewController.toggleCollapse), forControlEvents: .TouchUpInside)
-        
+        header.titleLabel.text = sections[section].name
         header.toggleButton.rotate(sections[section].collapsed! ? 0.0 : CGFloat(M_PI_2))
+        header.toggleButton.addTarget(self, action: #selector(CollapsibleTableViewController.toggleCollapse), forControlEvents: .TouchUpInside)
         
         return header.contentView
     }
