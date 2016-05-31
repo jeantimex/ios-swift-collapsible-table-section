@@ -127,3 +127,11 @@ func toggleCollapse(sender: UIButton) {
 ```
 
 That's it, please refer to the source code and see the detailed implementation.
+
+### More Collapsible Demo ###
+
+Sometimes you might want to implement the collapsible cells in a grouped-style table, I have a separate demo at [https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section). The implementation is pretty much the same but slight different.
+
+![demo](http://jinandsu.net/ios-swift-collapsible-table-section-in-grouped-section/demo.gif)<br />
+
+Author: Yong Su @ Box Inc.
