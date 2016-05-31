@@ -1,4 +1,4 @@
-# ios-swift-collapsible-table-section
+# iOS Collapsible Table Section
 A simple iOS swift project demonstrates how to implement collapsible table section.
 
 ### Demo ###
@@ -36,6 +36,8 @@ sections = [
 #### Step 2. Design the Header and Cell ####
 
 Select the `Table View` in the story board, choose `Dynamic Prototypes` and set `Prototype Cells` to `2`, one for the custom header and one for the row cell, and assign the `Identifier` to `header` and `cell` respectively.
+
+![cell](screenshots/cell.png)<br />
 
 Add a UIButton (the toggler) and a Label to the header prototype cell, create a swift file which extends `UITableViewCell` and name it `CollapsibleTableViewHeader.swift`. The file is super simple, it defines two IBOutlets for the toggle button and label. Finally set the header cell class to our custom header `CollapsibleTableViewHeader` and link the IBOutlets.
 
