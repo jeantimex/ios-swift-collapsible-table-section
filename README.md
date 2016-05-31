@@ -56,11 +56,12 @@ class CollapsibleTableViewHeader: UITableViewCell {
 
 By creating a prototype cell and subclassing UITableViewCell, we have the following benefits:
 * We can visually design the custom header
-* We shouldn't need to create a nib and register it to the the tableView like the following, personally I don't like having a nib in my project and if we use `dequeueReusableHeaderFooterViewWithIdentifier`, seems like we can't have 0 rows in that section dynamically:
+* We shouldn't need to create a nib and register it to the the tableView like so:
 ```swift
 let nib = UINib(nibName: "TableSectionHeader", bundle: nil)
 tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
 ```
+personally I don't like having a nibs in my project and if we use `dequeueReusableHeaderFooterViewWithIdentifier`, seems like we must have at least 1 row in that section, but we need to have 0 row!
 
 #### Step 3. The UITableViewDelegate  ####
 
