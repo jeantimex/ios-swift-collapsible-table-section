@@ -1,4 +1,4 @@
-# iOS Collapsible Table Section
+# How to Implement Collapsible Table Section in iOS
 A simple iOS swift project demonstrates how to implement collapsible table section.
 
 ### Demo ###
