@@ -61,7 +61,7 @@ By creating a prototype cell and subclassing UITableViewCell, we have the follow
 let nib = UINib(nibName: "TableSectionHeader", bundle: nil)
 tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
 ```
-personally I don't like having a nibs in my project and if we use `dequeueReusableHeaderFooterViewWithIdentifier`, seems like we must have at least 1 row in that section, but we need to have 0 row!
+personally I don't like having nibs in my project and if we use `dequeueReusableHeaderFooterViewWithIdentifier`, seems like we must have at least 1 row in that section, but we need to have 0 row!
 
 #### Step 3. The UITableViewDelegate  ####
 
