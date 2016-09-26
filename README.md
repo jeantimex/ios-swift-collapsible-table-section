@@ -1,7 +1,7 @@
 # How to Implement Collapsible Table Section in iOS
 A simple iOS swift project demonstrates how to implement collapsible table section.
 
-[![Language](https://img.shields.io/badge/Swift-2.2-orange.svg?style=flat)]()
+[![Language](https://img.shields.io/badge/swift-2.3-brightgreen.svg?style=flat)]()
 
 ### Demo ###
 ![demo](screenshots/demo.gif)<br />
