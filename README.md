@@ -3,6 +3,11 @@ A simple iOS swift project demonstrates how to implement collapsible table secti
 
 [![Language](https://img.shields.io/badge/swift-2.3-brightgreen.svg?style=flat)]()
 
+### Coming Soon ###
+- Use `UITableViewHeaderFooterView` instead of `UITableViewCell` according to [Apple API reference](https://developer.apple.com/reference/uikit/uitableviewheaderfooterview).
+- Auto layout programmatically
+- Remove storyboardy
+
 ### Demo ###
 ![demo](screenshots/demo.gif)<br />
 
