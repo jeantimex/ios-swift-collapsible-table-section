@@ -43,6 +43,8 @@ class CollapsibleTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Apple Products"
+        
         // Initialize the sections array
         // Here we have three sections: Mac, iPad, iPhone
         sections = [
@@ -50,36 +52,6 @@ class CollapsibleTableViewController: UITableViewController {
             Section(name: "iPad", items: ["iPad Pro", "iPad Air 2", "iPad mini 4", "Accessories"]),
             Section(name: "iPhone", items: ["iPhone 6s", "iPhone 6", "iPhone SE", "Accessories"])
         ]
-    }
-    
-    //
-    // MARK: - UITableViewDelegate
-    //
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return sections.count
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (sections[section].collapsed!) ? 0 : sections[section].items.count
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableCellWithIdentifier("header") as! CollapsibleTableViewHeader
-        
-        header.toggleButton.tag = section
-        header.titleLabel.text = sections[section].name
-        header.toggleButton.rotate(sections[section].collapsed! ? 0.0 : CGFloat(M_PI_2))
-        header.toggleButton.addTarget(self, action: #selector(CollapsibleTableViewController.toggleCollapse), forControlEvents: .TouchUpInside)
-        
-        return header.contentView
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
-        
-        cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
-        
-        return cell
     }
     
     //
@@ -94,6 +66,48 @@ class CollapsibleTableViewController: UITableViewController {
         
         // Reload section
         tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+    }
+    
+}
+
+extension CollapsibleTableViewController {
+
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (sections[section].collapsed!) ? 0 : sections[section].items.count
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44.0
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell? ?? UITableViewCell(style: .Default, reuseIdentifier: "cell")
+        
+        cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableHeaderFooterViewWithIdentifier("header") as? CollapsibleTableViewHeader ?? CollapsibleTableViewHeader(reuseIdentifier: "header")
+        
+        cell.textLabel?.text = sections[section].name
+        cell.section = section
+        cell.delegate = self
+        
+        return cell
+    }
+
+}
+
+extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
+    
+    func toggleHeader(section: Int) {
+        print(section)
     }
     
 }

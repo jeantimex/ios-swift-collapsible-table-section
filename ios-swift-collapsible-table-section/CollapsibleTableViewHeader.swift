@@ -8,9 +8,31 @@
 
 import UIKit
 
-class CollapsibleTableViewHeader: UITableViewCell {
+protocol CollapsibleTableViewHeaderDelegate {
+    func toggleHeader(section: Int)
+}
+
+class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
     
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var toggleButton: UIButton!
+    var delegate: CollapsibleTableViewHeaderDelegate?
+    var section: Int = 0
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CollapsibleTableViewHeader.tapHeader(_:))))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func tapHeader(gestureRecognizer: UITapGestureRecognizer) {
+        guard let cell = gestureRecognizer.view as? CollapsibleTableViewHeader else {
+            return
+        }
+        
+        self.delegate?.toggleHeader(cell.section)
+    }
     
 }
