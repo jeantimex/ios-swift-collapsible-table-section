@@ -4,6 +4,8 @@ A simple iOS swift project demonstrates how to implement collapsible table secti
 
 [![Language](https://img.shields.io/badge/swift-2.3-brightgreen.svg?style=flat)]()
 
+For Swift 3.0, we are migrating in [migrate-to-swift-3.0](https://github.com/jeantimex/ios-swift-collapsible-table-section/tree/migrate-to-swift-3.0) branch, eventually it will be merged back to master branch.
+
 ### Demo ###
 
 <img src="screenshots/demo.gif" width="400px">
