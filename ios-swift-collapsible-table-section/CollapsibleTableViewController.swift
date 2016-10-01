@@ -40,7 +40,7 @@ class CollapsibleTableViewController: UITableViewController {
         sections = [
             Section(name: "Mac", items: ["MacBook", "MacBook Air", "MacBook Pro", "iMac", "Mac Pro", "Mac mini", "Accessories", "OS X El Capitan"]),
             Section(name: "iPad", items: ["iPad Pro", "iPad Air 2", "iPad mini 4", "Accessories"]),
-            Section(name: "iPhone", items: ["iPhone 6s", "iPhone 6", "iPhone SE", "Accessories"])
+            Section(name: "iPhone", items: ["iPhone 6s", "iPhone 6", "iPhone SE", "Accessories"]),
         ]
     }
     
@@ -76,7 +76,10 @@ extension CollapsibleTableViewController {
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("header") as? CollapsibleTableViewHeader ?? CollapsibleTableViewHeader(reuseIdentifier: "header")
         
-        header.textLabel?.text = sections[section].name
+        header.titleLabel.text = sections[section].name
+        header.arrowLabel.text = ">"
+        header.setCollapsed(sections[section].collapsed)
+        
         header.section = section
         header.delegate = self
         
@@ -86,6 +89,10 @@ extension CollapsibleTableViewController {
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44.0
     }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1.0
+    }
 
 }
 
@@ -94,12 +101,14 @@ extension CollapsibleTableViewController {
 //
 extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
     
-    func toggleSection(section: Int) {
-        let collapsed = sections[section].collapsed
+    func toggleSection(header: CollapsibleTableViewHeader, section: Int) {
+        let collapsed = !sections[section].collapsed
         
         // Toggle collapse
-        sections[section].collapsed = !collapsed
+        sections[section].collapsed = collapsed
+        header.setCollapsed(collapsed)
         
+        // Adjust the height of the rows inside the section
         tableView.beginUpdates()
         for i in 0 ..< sections[section].items.count {
             tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: i, inSection: section)], withRowAnimation: .Automatic)
