@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CollapsibleTableViewHeaderDelegate {
-    func toggleSection(header: CollapsibleTableViewHeader, section: Int)
+    func toggleSection(_ header: CollapsibleTableViewHeader, section: Int)
 }
 
 class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
@@ -26,8 +26,8 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
         //
         // Constraint the size of arrow label for auto layout
         //
-        arrowLabel.widthAnchor.constraintEqualToConstant(12).active = true
-        arrowLabel.heightAnchor.constraintEqualToConstant(12).active = true
+        arrowLabel.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        arrowLabel.heightAnchor.constraint(equalToConstant: 12).isActive = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         arrowLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -50,8 +50,8 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
         
         contentView.backgroundColor = UIColor(hex: 0x2E3944)
         
-        titleLabel.textColor = UIColor.whiteColor()
-        arrowLabel.textColor = UIColor.whiteColor()
+        titleLabel.textColor = UIColor.white
+        arrowLabel.textColor = UIColor.white
         
         //
         // Autolayout the lables
@@ -61,22 +61,22 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
             "arrowLabel" : arrowLabel,
         ]
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-20-[titleLabel]-[arrowLabel]-20-|",
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-20-[titleLabel]-[arrowLabel]-20-|",
             options: [],
             metrics: nil,
             views: views
         ))
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[titleLabel]-|",
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[titleLabel]-|",
             options: [],
             metrics: nil,
             views: views
         ))
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-[arrowLabel]-|",
+        contentView.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-[arrowLabel]-|",
             options: [],
             metrics: nil,
             views: views
@@ -86,7 +86,7 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
     //
     // Trigger toggle section when tapping on the header
     //
-    func tapHeader(gestureRecognizer: UITapGestureRecognizer) {
+    func tapHeader(_ gestureRecognizer: UITapGestureRecognizer) {
         guard let cell = gestureRecognizer.view as? CollapsibleTableViewHeader else {
             return
         }
@@ -94,7 +94,7 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
         delegate?.toggleSection(self, section: cell.section)
     }
     
-    func setCollapsed(collapsed: Bool) {
+    func setCollapsed(_ collapsed: Bool) {
         //
         // Animate the arrow rotation (see Extensions.swf)
         //
