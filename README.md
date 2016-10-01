@@ -136,7 +136,7 @@ override func layoutSubviews() {
 
 #### Step 3. The UITableView DataSource and Delegate ####
 
-First the number of sections is `sections.count`:
+The number of sections is `sections.count`:
 
 ```swift
 override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
