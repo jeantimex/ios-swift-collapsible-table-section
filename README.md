@@ -1,15 +1,12 @@
 # How to Implement Collapsible Table Section in iOS
-A simple iOS swift project demonstrates how to implement collapsible table section.
+
+A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just purley Swift!
 
 [![Language](https://img.shields.io/badge/swift-2.3-brightgreen.svg?style=flat)]()
 
-### Coming Soon ###
-- Use `UITableViewHeaderFooterView` instead of `UITableViewCell` according to [Apple API reference](https://developer.apple.com/reference/uikit/uitableviewheaderfooterview).
-- Auto layout programmatically
-- Remove storyboardy
-
 ### Demo ###
-![demo](screenshots/demo.gif)<br />
+
+<img src="screenshots/demo.gif" width="400px">
 
 ### How to implement collapsible table sections? ###
 
@@ -40,37 +37,104 @@ sections = [
 ```
 `collapsed` indicates whether the current section is collapsed or not, by default is `false`.
 
-#### Step 2. Design the Header and Cell ####
+#### Step 2. The Section Header ####
 
-Select the `Table View` in the story board, choose `Dynamic Prototypes` and set `Prototype Cells` to `2`, one for the custom header and one for the row cell, and assign the `Identifier` to `header` and `cell` respectively.
-
-![cell](screenshots/cell.png)<br />
-
-Add a UIButton (the toggler) and a Label to the header prototype cell, create a swift file which extends `UITableViewCell` and name it `CollapsibleTableViewHeader.swift`. The file is super simple, it defines two IBOutlets for the toggle button and label. Finally set the header cell class to our custom header `CollapsibleTableViewHeader` and link the IBOutlets.
-
-Now the file should look like this:
+According to [Apple API reference](https://developer.apple.com/reference/uikit/uitableviewheaderfooterview), we should use `UITableViewHeaderFooterView`. Let's subclass it and implement the section header `CollapsibleTableViewHeader`:
 
 ```swift
-import UIKit
-
-class CollapsibleTableViewHeader: UITableViewCell {
+class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
+    let titleLabel = UILabel()
+    let arrowLabel = UILabel()
     
-  @IBOutlet var titleLabel: UILabel!
-  @IBOutlet var toggleButton: UIButton!
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(arrowLabel)
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 ```
 
-By creating a prototype cell and subclassing UITableViewCell, we have the following benefits:
-* We can visually design the custom header
-* We shouldn't need to create a nib and register it to the the tableView like so:
-```swift
-let nib = UINib(nibName: "TableSectionHeader", bundle: nil)
-tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
-```
-personally I don't like having nibs in my project and if we use `dequeueReusableHeaderFooterViewWithIdentifier`, seems like we must have at least 1 row in that section, but we need to have 0 row!
+We need to collapse or expand the section when user taps on the header, to achieve this, let's borrow `UITapGestureRecognizer`. Also we need to delegate this event to the table view to update the `collapsed` property.
 
-#### Step 3. The UITableViewDelegate  ####
+```swift
+protocol CollapsibleTableViewHeaderDelegate {
+    func toggleSection(header: CollapsibleTableViewHeader, section: Int)
+}
+
+class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
+    var delegate: CollapsibleTableViewHeaderDelegate?
+    var section: Int = 0
+    ...
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        ...
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CollapsibleTableViewHeader.tapHeader(_:))))
+    }
+    ...
+    func tapHeader(gestureRecognizer: UITapGestureRecognizer) {
+        guard let cell = gestureRecognizer.view as? CollapsibleTableViewHeader else {
+            return
+        }
+        delegate?.toggleSection(self, section: cell.section)
+    }
+    
+    func setCollapsed(collapsed: Bool) {
+        // Animate the arrow rotation (see Extensions.swf)
+        arrowLabel.rotate(collapsed ? 0.0 : CGFloat(M_PI_2))
+    }
+}
+```
+
+Since we are not using any storyboard or XIB, how to do auto layout programmatically? The answer is `NSLayoutConstraint`'s `constraintsWithVisualFormat` function.
+
+```swift
+override init(reuseIdentifier: String?) {
+    ...
+    // arrowLabel must have fixed width and height
+    arrowLabel.widthAnchor.constraintEqualToConstant(12).active = true
+    arrowLabel.heightAnchor.constraintEqualToConstant(12).active = true
+    
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    arrowLabel.translatesAutoresizingMaskIntoConstraints = false
+}
+
+override func layoutSubviews() {
+    super.layoutSubviews()
+    ...
+    let views = [
+        "titleLabel" : titleLabel,
+        "arrowLabel" : arrowLabel,
+    ]
+
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+        "H:|-20-[titleLabel]-[arrowLabel]-20-|",
+        options: [],
+        metrics: nil,
+        views: views
+    ))
+
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+        "V:|-[titleLabel]-|",
+        options: [],
+        metrics: nil,
+        views: views
+    ))
+
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+        "V:|-[arrowLabel]-|",
+        options: [],
+        metrics: nil,
+        views: views
+    ))
+}
+```
+
+#### Step 3. The UITableView DataSource and Delegate ####
 
 First the number of sections is `sections.count`:
 
@@ -80,11 +144,11 @@ override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 }
 ```
 
-For the number of rows in each section, we use `collapsed` property to control it, if `collapsed` is true, then return 0, otherwise return items count:
+and the number of rows in each section is:
 
 ```swift
 override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-  return (sections[section].collapsed!) ? 0 : sections[section].items.count
+    return sections[section].items.count
 }
 ```
 
@@ -92,46 +156,63 @@ We use tableView's viewForHeaderInSection function to hook up our custom header:
 
 ```swift
 override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-  let header = tableView.dequeueReusableCellWithIdentifier("header") as! CollapsibleTableViewHeader
-        
-  header.titleLabel.text = sections[section].name
-  header.toggleButton.tag = section
-  header.toggleButton.addTarget(self, action: #selector(CollapsibleTableViewController.toggleCollapse), forControlEvents: .TouchUpInside)
-        
-  header.toggleButton.rotate(sections[section].collapsed! ? 0.0 : CGFloat(M_PI_2))
-        
-  return header.contentView
+    let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("header") as? CollapsibleTableViewHeader ?? CollapsibleTableViewHeader(reuseIdentifier: "header")
+
+    header.titleLabel.text = sections[section].name
+    header.arrowLabel.text = ">"
+    header.setCollapsed(sections[section].collapsed)
+
+    header.section = section
+    header.delegate = self
+
+    return header
 }
 ```
 
-noticed that we register the touch up inside event for the toggler, once it's tapped, it will trigger the `toggleCollapse` function.
-
-Last, the normal row cell is pretty straightforward:
+The normal row cell is pretty straightforward:
 
 ```swift
 override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-  let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
-    
-  cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
-    
-  return cell
+    let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell? ?? UITableViewCell(style: .Default, reuseIdentifier: "cell")
+
+    cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
+
+    return cell
+}
+```
+
+#### Step 4. How to Toggle Collapse and Expand ####
+
+The idea is really simple, if a section's `collapsed` property is `true`, we set the height of the rows inside that section to be `0`, otherwise `44.0`!
+
+```swift
+override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    return sections[indexPath.section].collapsed! ? 0 : 44.0
 }
 ```
 
 And here is the toggle function:
 
 ```swift
-func toggleCollapse(sender: UIButton) {
-  let section = sender.tag
-  let collapsed = sections[section].collapsed
-    
-  // Toggle collapse
-  sections[section].collapsed = !collapsed
-    
-  // Reload section
-  tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
+extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
+    func toggleSection(header: CollapsibleTableViewHeader, section: Int) {
+        let collapsed = !sections[section].collapsed
+        
+        // Toggle collapse
+        sections[section].collapsed = collapsed
+        header.setCollapsed(collapsed)
+        
+        // Adjust the height of the rows inside the section
+        tableView.beginUpdates()
+        for i in 0 ..< sections[section].items.count {
+            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: i, inSection: section)], withRowAnimation: .Automatic)
+        }
+        tableView.endUpdates()
+    }
 }
 ```
+
+Noticed that we don't lazily just reload the whole section, we only reload the rows inside that section, so that we won't see the refresh of the section header, and most importantly it will allow us to animate anything in the section header smoothly, i.e., rotate the arrow label, change the background etc.
 
 That's it, please refer to the source code and see the detailed implementation.
 
