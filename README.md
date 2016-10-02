@@ -1,6 +1,6 @@
 # How to Implement Collapsible Table Section in iOS
 
-A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just purley Swift!
+A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just purely Swift!
 
 [![Language](https://img.shields.io/badge/swift-2.3-brightgreen.svg?style=flat)]()
 
