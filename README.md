@@ -224,4 +224,4 @@ Sometimes you might want to implement the collapsible cells in a grouped-style t
 
 ![demo](http://jinandsu.net/ios-swift-collapsible-table-section-in-grouped-section/demo.gif)<br />
 
-Author: Yong Su @ Box Inc.
+Author: Yong Su [Box Inc.](www.box.com)
