@@ -12,9 +12,9 @@ import UIKit
 // MARK: - Section Data Structure
 //
 struct Section {
-    var name: String!
-    var items: [String]!
-    var collapsed: Bool!
+    var name: String
+    var items: [String]
+    var collapsed: Bool
     
     init(name: String, items: [String], collapsed: Bool = false) {
         self.name = name
@@ -32,7 +32,8 @@ class CollapsibleTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
         self.title = "Apple Products"
         
         // Initialize the sections array
@@ -56,7 +57,7 @@ extension CollapsibleTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].items.count
+        return sections[section].collapsed ? 0 : sections[section].items.count
     }
     
     // Cell
@@ -69,7 +70,7 @@ extension CollapsibleTableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return sections[indexPath.section].collapsed! ? 0 : 44.0
+        return sections[indexPath.section].collapsed ? 0 : UITableViewAutomaticDimension
     }
     
     // Header
@@ -109,11 +110,7 @@ extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
         header.setCollapsed(collapsed)
         
         // Adjust the height of the rows inside the section
-        tableView.beginUpdates()
-        for i in 0 ..< sections[section].items.count {
-            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: i, inSection: section)], withRowAnimation: .Automatic)
-        }
-        tableView.endUpdates()
+        tableView.reloadSections(NSIndexSet(index: section), withRowAnimation: .Automatic)
     }
     
 }
