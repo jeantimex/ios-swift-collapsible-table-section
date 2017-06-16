@@ -229,4 +229,4 @@ Sometimes you might want to implement the collapsible cells in a grouped-style t
 
 This project is licensed under the MIT license, Copyright (c) 2017 Yong Su. For more information see `LICENSE.md`.
 
-Author: [Yong Su](https://github.com/jeantimex) Box Inc.
+Author: [Yong Su](https://github.com/jeantimex) @ Box Inc.
