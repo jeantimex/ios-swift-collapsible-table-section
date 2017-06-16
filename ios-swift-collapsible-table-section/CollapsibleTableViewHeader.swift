@@ -27,7 +27,6 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
         // Constraint the size of arrow label for auto layout
         //
         arrowLabel.widthAnchor.constraint(equalToConstant: 12).isActive = true
-        arrowLabel.heightAnchor.constraint(equalToConstant: 12).isActive = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         arrowLabel.translatesAutoresizingMaskIntoConstraints = false
