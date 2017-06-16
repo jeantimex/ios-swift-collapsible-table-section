@@ -12,7 +12,7 @@ A simple iOS swift project demonstrates how to implement collapsible table secti
 
 #### Step 1. Prepare the Data ####
 
-Let's say we have the following data that is grouped to different sections, each section is a `Section` object:
+Let's say we have the following data that is grouped into different sections, each section is represented by a `Section` object:
 
 ```swift
 struct Section {
@@ -63,7 +63,7 @@ We need to collapse or expand the section when user taps on the header, to achie
 
 ```swift
 protocol CollapsibleTableViewHeaderDelegate {
-    func toggleSection(header: CollapsibleTableViewHeader, section: Int)
+    func toggleSection(_ header: CollapsibleTableViewHeader, section: Int)
 }
 
 class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
@@ -76,14 +76,14 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CollapsibleTableViewHeader.tapHeader(_:))))
     }
     ...
-    func tapHeader(gestureRecognizer: UITapGestureRecognizer) {
+    func tapHeader(_ gestureRecognizer: UITapGestureRecognizer) {
         guard let cell = gestureRecognizer.view as? CollapsibleTableViewHeader else {
             return
         }
         delegate?.toggleSection(self, section: cell.section)
     }
     
-    func setCollapsed(collapsed: Bool) {
+    func setCollapsed(_ collapsed: Bool) {
         // Animate the arrow rotation (see Extensions.swf)
         arrowLabel.rotate(collapsed ? 0.0 : CGFloat(M_PI_2))
     }
@@ -97,7 +97,6 @@ override init(reuseIdentifier: String?) {
     ...
     // arrowLabel must have fixed width and height
     arrowLabel.widthAnchor.constraintEqualToConstant(12).active = true
-    arrowLabel.heightAnchor.constraintEqualToConstant(12).active = true
     
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     arrowLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -136,10 +135,12 @@ override func layoutSubviews() {
 
 #### Step 3. The UITableView DataSource and Delegate ####
 
+Now we implemented the header view, let's get back to the table view controller.
+
 The number of sections is `sections.count`:
 
 ```swift
-override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+override func numberOfSectionsInTableView(in tableView: UITableView) -> Int {
   return sections.count
 }
 ```
@@ -147,7 +148,7 @@ override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 and the number of rows in each section is:
 
 ```swift
-override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return sections[section].items.count
 }
 ```
@@ -155,7 +156,7 @@ override func tableView(tableView: UITableView, numberOfRowsInSection section: I
 We use tableView's viewForHeaderInSection function to hook up our custom header:
 
 ```swift
-override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("header") as? CollapsibleTableViewHeader ?? CollapsibleTableViewHeader(reuseIdentifier: "header")
 
     header.titleLabel.text = sections[section].name
@@ -169,10 +170,10 @@ override func tableView(tableView: UITableView, viewForHeaderInSection section: 
 }
 ```
 
-The normal row cell is pretty straightforward:
+Setup the normal row cell is pretty straightforward:
 
 ```swift
-override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+override func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell? ?? UITableViewCell(style: .Default, reuseIdentifier: "cell")
 
     cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
@@ -186,7 +187,7 @@ override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:
 The idea is really simple, if a section's `collapsed` property is `true`, we set the height of the rows inside that section to be `0`, otherwise `44.0`!
 
 ```swift
-override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+override func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     return sections[indexPath.section].collapsed! ? 0 : 44.0
 }
 ```
@@ -195,7 +196,7 @@ And here is the toggle function:
 
 ```swift
 extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
-    func toggleSection(header: CollapsibleTableViewHeader, section: Int) {
+    func toggleSection(_ header: CollapsibleTableViewHeader, section: Int) {
         let collapsed = !sections[section].collapsed
         
         // Toggle collapse
@@ -220,6 +221,10 @@ That's it, please refer to the source code and see the detailed implementation.
 
 Sometimes you might want to implement the collapsible cells in a grouped-style table, I have a separate demo at [https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section). The implementation is pretty much the same but slightly different.
 
-![demo](http://jinandsu.net/ios-swift-collapsible-table-section-in-grouped-section/demo.gif)<br />
+![demo](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section/blob/master/screenshots/demo.gif)<br />
 
-Author: Yong Su [Box Inc.](www.box.com)
+### License ###
+
+This project is licensed under the MIT license, Copyright (c) 2017 Yong Su. For more information see `LICENSE.md`.
+
+Author: [Yong Su](https://github.com/jeantimex) Box Inc.
