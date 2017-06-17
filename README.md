@@ -1,14 +1,10 @@
 # How to Implement Collapsible Table Section in iOS
 
-![rocket](screenshots/cover.png)
+![rocket](screenshots/cover.gif)
 
 :iphone: A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just purely Swift!
 
 [![Language](https://img.shields.io/badge/swift-3.0-brightgreen.svg?style=flat)]()
-
-### Demo ###
-
-<img src="screenshots/demo.gif" width="400px">
 
 ### How to implement collapsible table sections? ###
 
@@ -222,8 +218,6 @@ That's it, please refer to the source code and see the detailed implementation.
 ### More Collapsible Demo ###
 
 Sometimes you might want to implement the collapsible cells in a grouped-style table, I have a separate demo at [https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section). The implementation is pretty much the same but slightly different.
-
-![demo](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section/blob/master/screenshots/demo.gif)<br />
 
 ### License ###
 
