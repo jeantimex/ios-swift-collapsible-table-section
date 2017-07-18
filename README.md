@@ -8,7 +8,7 @@ In this project, the table view automatically resizes the height of the rows to 
 
 ![rocket](docs/images/cover.gif)
 
-### How to implement collapsible table sections? ###
+## How to implement collapsible table sections? ##
 
 #### Step 1. Prepare the Data ####
 
@@ -231,11 +231,11 @@ After the sections get reloaded, the number of cells in that section will be rec
 
 That's it, we have implemented the collapsible table section! Please refer to the source code and see the detailed implementation.
 
-### More Collapsible Demo ###
+## More Collapsible Demo ##
 
 Sometimes you might want to implement the collapsible cells in a grouped-style table, I have a separate demo at [https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section). The implementation is pretty much the same but slightly different.
 
-### License ###
+## License ##
 
 This project is licensed under the MIT license, Copyright (c) 2017 Yong Su. For more information see `LICENSE.md`.
 
