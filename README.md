@@ -1,6 +1,8 @@
 # How to Implement Collapsible Table Section in iOS
 
-:iphone: A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just purely Swift!
+A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just pure Swift!
+
+In this project, the table view automatically resizes the height of the rows to fit the content in each cell.
 
 ![rocket](screenshots/cover.gif)
 
@@ -14,28 +16,63 @@ Let's say we have the following data that is grouped into different sections, ea
 
 ```swift
 struct Section {
-  var name: String!
-  var items: [String]!
-  var collapsed: Bool!
+  var name: String
+  var items: [String]
+  var collapsed: Bool
     
-  init(name: String, items: [String], collapsed: Bool = false) {
+  init(name: String, items: [Item], collapsed: Bool = false) {
     self.name = name
     self.items = items
     self.collapsed = collapsed
+  }
+}
+
+struct Item {
+  var name: String
+  var detail: String
+    
+  init(name: String, detail: String) {
+    self.name = name
+    self.detail = detail
   }
 }
     
 var sections = [Section]()
 
 sections = [
-  Section(name: "Mac", items: ["MacBook", "MacBook Air", "MacBook Pro", "iMac", "Mac Pro", "Mac mini", "Accessories", "OS X El Capitan"]),
-  Section(name: "iPad", items: ["iPad Pro", "iPad Air 2", "iPad mini 4", "Accessories"]),
-  Section(name: "iPhone", items: ["iPhone 6s", "iPhone 6", "iPhone SE", "Accessories"])
+  Section(name: "Mac", items: [
+    Item(name: "MacBook", detail: "Apple's ultraportable laptop"),
+    Item(name: "MacBook Air", detail: "A very light ultraportable laptop.")
+  ]),
+  Section(name: "iPad", items: [
+    Item(name: "iPad Pro", detail: "iPad Pro delivers epic power."),
+    Item(name: "iPad Air 2", detail: "The second-generation of iPad Air tablet.")
+  ]),
+  Section(name: "iPhone", items: [
+    Item(name: "iPhone 7", detail: "The latest iPhone."),
+    Item(name: "iPhone 6", detail: "The 6th-generation of iPhone.")
+  ])
 ]
 ```
 `collapsed` indicates whether the current section is collapsed or not, by default is `false`.
 
-#### Step 2. The Section Header ####
+#### Step 2. Setup TableView to Support Autosizing ####
+
+```swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+        
+  // Auto resizing the height of the cell
+  tableView.estimatedRowHeight = 44.0
+  tableView.rowHeight = UITableViewAutomaticDimension
+  
+  ...
+}
+```
+
+Ignore this step if your cells have a fixed height.
+
+#### Step 3. The Section Header ####
 
 According to [Apple API reference](https://developer.apple.com/reference/uikit/uitableviewheaderfooterview), we should use `UITableViewHeaderFooterView`. Let's subclass it and implement the section header `CollapsibleTableViewHeader`:
 
@@ -83,7 +120,7 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
     
     func setCollapsed(_ collapsed: Bool) {
         // Animate the arrow rotation (see Extensions.swf)
-        arrowLabel.rotate(collapsed ? 0.0 : CGFloat(M_PI_2))
+        arrowLabel.rotate(collapsed ? 0.0 : .pi / 2)
     }
 }
 ```
@@ -131,7 +168,7 @@ override func layoutSubviews() {
 }
 ```
 
-#### Step 3. The UITableView DataSource and Delegate ####
+#### Step 4. The UITableView DataSource and Delegate ####
 
 Now we implemented the header view, let's get back to the table view controller.
 
@@ -147,11 +184,13 @@ and the number of rows in each section is:
 
 ```swift
 override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return sections[section].items.count
+    return sections[section].collapsed ? 0 : sections[section].items.count
 }
 ```
 
-We use tableView's viewForHeaderInSection function to hook up our custom header:
+Noticed that we don't need to render any cell for the collapsed section, this can improve the performance a lot if there are lots of cells in that section.
+
+Next, we use tableView's viewForHeaderInSection function to hook up our custom header:
 
 ```swift
 override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -172,21 +211,26 @@ Setup the normal row cell is pretty straightforward:
 
 ```swift
 override func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell? ?? UITableViewCell(style: .Default, reuseIdentifier: "cell")
-
-    cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
-
-    return cell
+  let cell: CollapsibleTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CollapsibleTableViewCell ?? CollapsibleTableViewCell(style: .default, reuseIdentifier: "cell")
+        
+  let item: Item = sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
+        
+  cell.nameLabel.text = item.name
+  cell.detailLabel.text = item.detail
+        
+  return cell
 }
 ```
 
-#### Step 4. How to Toggle Collapse and Expand ####
+Of course you can use a plain `UITableViewCell`, our `CollapsibleTableViewCell` is a subclass of `UITableViewCell` that adds the name and detail labels, and the most important thing is that it supports autosizing feature, the key is to setup the autolayout constrains properly, please refer to the source code for more details.
 
-The idea is really simple, if a section's `collapsed` property is `true`, we set the height of the rows inside that section to be `0`, otherwise `44.0`!
+#### Step 5. How to Toggle Collapse and Expand ####
+
+The idea is really simple, if a section's `collapsed` property is `true`, we set the height of the rows inside that section to be `0`, otherwise `UITableViewAutomaticDimension`!
 
 ```swift
 override func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return sections[indexPath.section].collapsed! ? 0 : 44.0
+  return sections[(indexPath as NSIndexPath).section].collapsed ? 0 : UITableViewAutomaticDimension
 }
 ```
 
@@ -194,30 +238,22 @@ And here is the toggle function:
 
 ```swift
 extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
-    func toggleSection(_ header: CollapsibleTableViewHeader, section: Int) {
-        let collapsed = !sections[section].collapsed
+  func toggleSection(_ header: CollapsibleTableViewHeader, section: Int) {
+    let collapsed = !sections[section].collapsed
         
-        // Toggle collapse
-        sections[section].collapsed = collapsed
-        header.setCollapsed(collapsed)
-        
-        // Adjust the height of the rows inside the section
-        tableView.beginUpdates()
-        for i in 0 ..< sections[section].items.count {
-            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: i, inSection: section)], withRowAnimation: .Automatic)
-        }
-        tableView.endUpdates()
-    }
+    // Toggle collapse
+    sections[section].collapsed = collapsed
+    header.setCollapsed(collapsed)
+    
+    // Reload the whole section
+    tableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)
+  }
 }
 ```
 
-Noticed that we don't lazily just reload the whole section, we only reload the rows inside that section, so that we won't see the refresh of the section header, and most importantly it will allow us to animate anything in the section header smoothly, i.e., rotate the arrow label, change the background etc.
+After the sections get reloaded, the number of cells in that section will be recalculated and redrawn. 
 
 That's it, please refer to the source code and see the detailed implementation.
-
-### What's coming next? ###
-
-- Custom tableview cell with auto height support, see branch https://github.com/jeantimex/ios-swift-collapsible-table-section/pull/22.
 
 ### More Collapsible Demo ###
 
