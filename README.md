@@ -1,12 +1,12 @@
 # How to Implement Collapsible Table Section in iOS
 
+[![Language](https://img.shields.io/badge/swift-3.0-brightgreen.svg?style=flat)]()
+
 A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just pure Swift!
 
 In this project, the table view automatically resizes the height of the rows to fit the content in each cell, and the custom cell is also implemented programmatically.
 
 ![rocket](docs/images/cover.gif)
-
-[![Language](https://img.shields.io/badge/swift-3.0-brightgreen.svg?style=flat)]()
 
 ### How to implement collapsible table sections? ###
 
@@ -26,32 +26,13 @@ struct Section {
     self.collapsed = collapsed
   }
 }
-
-struct Item {
-  var name: String
-  var detail: String
-    
-  init(name: String, detail: String) {
-    self.name = name
-    self.detail = detail
-  }
-}
     
 var sections = [Section]()
 
 sections = [
-  Section(name: "Mac", items: [
-    Item(name: "MacBook", detail: "Apple's ultraportable laptop"),
-    Item(name: "MacBook Air", detail: "A very light ultraportable laptop.")
-  ]),
-  Section(name: "iPad", items: [
-    Item(name: "iPad Pro", detail: "iPad Pro delivers epic power."),
-    Item(name: "iPad Air 2", detail: "The second-generation of iPad Air tablet.")
-  ]),
-  Section(name: "iPhone", items: [
-    Item(name: "iPhone 7", detail: "The latest iPhone."),
-    Item(name: "iPhone 6", detail: "The 6th-generation of iPhone.")
-  ])
+  Section(name: "Mac", items: ["MacBook", "MacBook Air"]),
+  Section(name: "iPad", items: ["iPad Pro", "iPad Air 2"]),
+  Section(name: "iPhone", items: ["iPhone 7", "iPhone 6"])
 ]
 ```
 `collapsed` indicates whether the current section is collapsed or not, by default is `false`.
@@ -211,18 +192,13 @@ Setup the normal row cell is pretty straightforward:
 
 ```swift
 override func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-  let cell: CollapsibleTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as? CollapsibleTableViewCell ?? CollapsibleTableViewCell(style: .default, reuseIdentifier: "cell")
-        
-  let item: Item = sections[(indexPath as NSIndexPath).section].items[(indexPath as NSIndexPath).row]
-        
-  cell.nameLabel.text = item.name
-  cell.detailLabel.text = item.detail
-        
+  let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell? ?? UITableViewCell(style: .Default, reuseIdentifier: "cell")
+  cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
   return cell
 }
 ```
 
-Of course you can use a plain `UITableViewCell`, our `CollapsibleTableViewCell` is a subclass of `UITableViewCell` that adds the name and detail labels, and the most important thing is that it supports autosizing feature, the key is to setup the autolayout constrains properly, please refer to the source code for more details.
+In the above code, we use the plain `UITableViewCell`, if you would like to see how to make a autosizing cell, please take a look at our `CollapsibleTableViewCell` in the source code. The `CollapsibleTableViewCell` is a subclass of `UITableViewCell` that adds the name and detail labels, and the most important thing is that it supports autosizing feature, the key is to setup the autolayout constrains properly, make sure the subviews are proplery stretched to the top and bottom in the `contentView`.
 
 #### Step 5. How to Toggle Collapse and Expand ####
 
@@ -253,7 +229,7 @@ extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
 
 After the sections get reloaded, the number of cells in that section will be recalculated and redrawn. 
 
-That's it, please refer to the source code and see the detailed implementation.
+That's it, we have implemented the collapsible table section! Please refer to the source code and see the detailed implementation.
 
 ### More Collapsible Demo ###
 
