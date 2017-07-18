@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A12C8C21D9C3AAF00D0BEE3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A12C8C11D9C3AAF00D0BEE3 /* Extensions.swift */; };
+		0A8465851F1DBC6E002CD874 /* CollapsibleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8465841F1DBC6E002CD874 /* CollapsibleTableViewCell.swift */; };
 		0A908DEF1CFCAA9200470F33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A908DEE1CFCAA9200470F33 /* AppDelegate.swift */; };
 		0A908DF61CFCAA9200470F33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A908DF51CFCAA9200470F33 /* Assets.xcassets */; };
 		0A908DF91CFCAA9200470F33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A908DF71CFCAA9200470F33 /* LaunchScreen.storyboard */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		0A12C8C11D9C3AAF00D0BEE3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		0A8465841F1DBC6E002CD874 /* CollapsibleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewCell.swift; sourceTree = "<group>"; };
 		0A908DEB1CFCAA9200470F33 /* ios-swift-collapsible-table-section.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-swift-collapsible-table-section.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A908DEE1CFCAA9200470F33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A908DF51CFCAA9200470F33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				0A908E001CFCAC7500470F33 /* CollapsibleTableViewController.swift */,
 				0A908E021CFCB8D600470F33 /* CollapsibleTableViewHeader.swift */,
 				0A12C8C11D9C3AAF00D0BEE3 /* Extensions.swift */,
+				0A8465841F1DBC6E002CD874 /* CollapsibleTableViewCell.swift */,
 			);
 			path = "ios-swift-collapsible-table-section";
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			files = (
 				0A908E011CFCAC7500470F33 /* CollapsibleTableViewController.swift in Sources */,
 				0A908E031CFCB8D600470F33 /* CollapsibleTableViewHeader.swift in Sources */,
+				0A8465851F1DBC6E002CD874 /* CollapsibleTableViewCell.swift in Sources */,
 				0A908DEF1CFCAA9200470F33 /* AppDelegate.swift in Sources */,
 				0A12C8C21D9C3AAF00D0BEE3 /* Extensions.swift in Sources */,
 			);
