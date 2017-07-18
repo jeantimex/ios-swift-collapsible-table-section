@@ -2,7 +2,7 @@
 
 A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just pure Swift!
 
-In this project, the table view automatically resizes the height of the rows to fit the content in each cell.
+In this project, the table view automatically resizes the height of the rows to fit the content in each cell, and the custom cell is also implemented programmatically.
 
 ![rocket](screenshots/cover.gif)
 
