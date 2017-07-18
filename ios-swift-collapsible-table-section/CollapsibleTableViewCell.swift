@@ -30,6 +30,7 @@ class CollapsibleTableViewCell: UITableViewCell {
         
         // configure detailLabel
         contentView.addSubview(detailLabel)
+        detailLabel.lineBreakMode = .byWordWrapping
         detailLabel.translatesAutoresizingMaskIntoConstraints = false
         detailLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
         detailLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true

@@ -89,7 +89,7 @@ extension CollapsibleTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].items.count
+        return sections[section].collapsed ? 0 : sections[section].items.count
     }
     
     // Cell
@@ -145,12 +145,7 @@ extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
         sections[section].collapsed = collapsed
         header.setCollapsed(collapsed)
         
-        // Adjust the height of the rows inside the section
-        tableView.beginUpdates()
-        for i in 0 ..< sections[section].items.count {
-            tableView.reloadRows(at: [IndexPath(row: i, section: section)], with: .automatic)
-        }
-        tableView.endUpdates()
+        tableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)
     }
     
 }
