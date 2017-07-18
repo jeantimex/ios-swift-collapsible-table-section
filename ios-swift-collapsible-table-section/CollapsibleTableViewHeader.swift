@@ -97,7 +97,7 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
         //
         // Animate the arrow rotation (see Extensions.swf)
         //
-        arrowLabel.rotate(collapsed ? 0.0 : CGFloat(M_PI_2))
+        arrowLabel.rotate(collapsed ? 0.0 : .pi / 2)
     }
     
 }
