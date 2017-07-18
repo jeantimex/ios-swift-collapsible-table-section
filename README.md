@@ -215,6 +215,10 @@ Noticed that we don't lazily just reload the whole section, we only reload the r
 
 That's it, please refer to the source code and see the detailed implementation.
 
+### What's coming next? ###
+
+- Custom tableview cell with auto height support, see branch https://github.com/jeantimex/ios-swift-collapsible-table-section/pull/22.
+
 ### More Collapsible Demo ###
 
 Sometimes you might want to implement the collapsible cells in a grouped-style table, I have a separate demo at [https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section). The implementation is pretty much the same but slightly different.
