@@ -51,8 +51,6 @@ override func viewDidLoad() {
 }
 ```
 
-Ignore this step if your cells have a fixed height.
-
 #### Step 3. The Section Header ####
 
 According to [Apple API reference](https://developer.apple.com/reference/uikit/uitableviewheaderfooterview), we should use `UITableViewHeaderFooterView`. Let's subclass it and implement the section header `CollapsibleTableViewHeader`:
