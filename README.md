@@ -233,6 +233,10 @@ That's it, we have implemented the collapsible table section! Please refer to th
 
 Sometimes you might want to implement the collapsible cells in a grouped-style table, I have a separate demo at [https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section](https://github.com/jeantimex/ios-swift-collapsible-table-section-in-grouped-section). The implementation is pretty much the same but slightly different.
 
+## Can I use it as a pod? ##
+
+I am making a pod in a separate repo: [CollapsibleTableSectionViewController](https://github.com/jeantimex/CollapsibleTableSectionViewController), and I just get started, designing the interfaces etc, so it will take some time to finish.
+
 ## License ##
 
 This project is licensed under the MIT license, Copyright (c) 2017 Yong Su. For more information see `LICENSE.md`.
