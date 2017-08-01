@@ -104,46 +104,33 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
 }
 ```
 
-Since we are not using any storyboard or XIB, how to do auto layout programmatically? The answer is `NSLayoutConstraint`'s `constraintsWithVisualFormat` function.
+Since we are not using any storyboard or XIB, how to do auto layout programmatically? The answer is `constraint anchors`.
 
 ```swift
 override init(reuseIdentifier: String?) {
-    ...
-    // arrowLabel must have fixed width and height
-    arrowLabel.widthAnchor.constraintEqualToConstant(12).active = true
-    
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    arrowLabel.translatesAutoresizingMaskIntoConstraints = false
-}
+  ...
+  // Content View
+  contentView.backgroundColor = UIColor(hex: 0x2E3944)
 
-override func layoutSubviews() {
-    super.layoutSubviews()
-    ...
-    let views = [
-        "titleLabel" : titleLabel,
-        "arrowLabel" : arrowLabel,
-    ]
+  let marginGuide = contentView.layoutMarginsGuide
 
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-        "H:|-20-[titleLabel]-[arrowLabel]-20-|",
-        options: [],
-        metrics: nil,
-        views: views
-    ))
+  // Arrow label
+  contentView.addSubview(arrowLabel)
+  arrowLabel.textColor = UIColor.white
+  arrowLabel.translatesAutoresizingMaskIntoConstraints = false
+  arrowLabel.widthAnchor.constraint(equalToConstant: 12).isActive = true
+  arrowLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+  arrowLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
+  arrowLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
 
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-        "V:|-[titleLabel]-|",
-        options: [],
-        metrics: nil,
-        views: views
-    ))
-
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-        "V:|-[arrowLabel]-|",
-        options: [],
-        metrics: nil,
-        views: views
-    ))
+  // Title label
+  contentView.addSubview(titleLabel)
+  titleLabel.textColor = UIColor.white
+  titleLabel.translatesAutoresizingMaskIntoConstraints = false
+  titleLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+  titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
+  titleLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+  titleLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
 }
 ```
 
@@ -190,7 +177,7 @@ Setup the normal row cell is pretty straightforward:
 
 ```swift
 override func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-  let cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell? ?? UITableViewCell(style: .Default, reuseIdentifier: "cell")
+  let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as UITableViewCell? ?? UITableViewCell(style: .default, reuseIdentifier: "Cell")
   cell.textLabel?.text = sections[indexPath.section].items[indexPath.row]
   return cell
 }
@@ -204,7 +191,7 @@ The idea is really simple, if a section's `collapsed` property is `true`, we set
 
 ```swift
 override func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-  return sections[(indexPath as NSIndexPath).section].collapsed ? 0 : UITableViewAutomaticDimension
+  return sections[indexPath.section].collapsed ? 0 : UITableViewAutomaticDimension
 }
 ```
 
