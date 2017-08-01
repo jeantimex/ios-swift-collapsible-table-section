@@ -23,16 +23,28 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        //
-        // Constraint the size of arrow label for auto layout
-        //
-        arrowLabel.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        // Content View
+        contentView.backgroundColor = UIColor(hex: 0x2E3944)
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        arrowLabel.translatesAutoresizingMaskIntoConstraints = false
+        let marginGuide = contentView.layoutMarginsGuide
         
-        contentView.addSubview(titleLabel)
+        // Arrow label
         contentView.addSubview(arrowLabel)
+        arrowLabel.textColor = UIColor.white
+        arrowLabel.translatesAutoresizingMaskIntoConstraints = false
+        arrowLabel.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        arrowLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+        arrowLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
+        arrowLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        
+        // Title label
+        contentView.addSubview(titleLabel)
+        titleLabel.textColor = UIColor.white
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
         
         //
         // Call tapHeader when tapping on this header
@@ -42,44 +54,6 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        contentView.backgroundColor = UIColor(hex: 0x2E3944)
-        
-        titleLabel.textColor = UIColor.white
-        arrowLabel.textColor = UIColor.white
-        
-        //
-        // Autolayout the lables
-        //
-        let views = [
-            "titleLabel" : titleLabel,
-            "arrowLabel" : arrowLabel,
-        ]
-        
-        contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-20-[titleLabel]-[arrowLabel]-20-|",
-            options: [],
-            metrics: nil,
-            views: views
-        ))
-        
-        contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-[titleLabel]-|",
-            options: [],
-            metrics: nil,
-            views: views
-        ))
-        
-        contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-[arrowLabel]-|",
-            options: [],
-            metrics: nil,
-            views: views
-        ))
     }
     
     //
