@@ -49,6 +49,10 @@ override func viewDidLoad() {
   
   ...
 }
+
+override func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  return UITableViewAutomaticDimension
+}
 ```
 
 #### Step 3. The Section Header ####
@@ -146,7 +150,7 @@ override func numberOfSectionsInTableView(in tableView: UITableView) -> Int {
 }
 ```
 
-and the number of rows in each section is:
+Here is the key ingredient of implementing the collapsible table section, if the section is collapsed, then that section should not have any row:
 
 ```swift
 override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,7 +158,7 @@ override func tableView(_ tableView: UITableView, numberOfRowsInSection section:
 }
 ```
 
-Noticed that we don't need to render any cell for the collapsed section, this can improve the performance a lot if there are lots of cells in that section.
+Noticed that we don't need to render any cell for the collapsed section, this can improve the performance a lot if there are tons of cells in that section.
 
 Next, we use tableView's viewForHeaderInSection function to hook up our custom header:
 
@@ -187,15 +191,7 @@ In the above code, we use the plain `UITableViewCell`, if you would like to see 
 
 #### Step 5. How to Toggle Collapse and Expand ####
 
-The idea is really simple, if a section's `collapsed` property is `true`, we set the height of the rows inside that section to be `0`, otherwise `UITableViewAutomaticDimension`!
-
-```swift
-override func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-  return sections[indexPath.section].collapsed ? 0 : UITableViewAutomaticDimension
-}
-```
-
-And here is the toggle function:
+The idea is pretty starightforward, reverse the `collapsed` flag for the section and tell the tableView to reload that section:
 
 ```swift
 extension CollapsibleTableViewController: CollapsibleTableViewHeaderDelegate {
