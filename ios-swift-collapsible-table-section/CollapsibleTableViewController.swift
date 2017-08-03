@@ -54,7 +54,7 @@ extension CollapsibleTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return sections[indexPath.section].collapsed ? 0 : UITableViewAutomaticDimension
+        return UITableViewAutomaticDimension
     }
     
     // Header
