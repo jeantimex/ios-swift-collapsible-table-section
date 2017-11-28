@@ -6,7 +6,7 @@ A simple iOS swift project demonstrates how to implement collapsible table secti
 
 In this project, the table view automatically resizes the height of the rows to fit the content in each cell, and the custom cell is also implemented programmatically.
 
-![cover](docs/images/cover.gif)
+![cover](https://user-images.githubusercontent.com/565300/33296371-1c17e332-d390-11e7-910b-947ed42fcbb3.gif)
 
 ## How to implement collapsible table sections? ##
 
