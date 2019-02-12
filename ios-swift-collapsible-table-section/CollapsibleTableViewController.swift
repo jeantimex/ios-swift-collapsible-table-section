@@ -20,7 +20,7 @@ class CollapsibleTableViewController: UITableViewController {
         
         // Auto resizing the height of the cell
         tableView.estimatedRowHeight = 44.0
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         
         self.title = "Apple Products"
     }
@@ -54,7 +54,7 @@ extension CollapsibleTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     // Header
