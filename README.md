@@ -2,6 +2,9 @@
 
 [![Language](https://img.shields.io/badge/swift-4.2-brightgreen.svg?style=flat)]()
 
+[![Backers on Open Collective](https://opencollective.com/ios-swift-collapsible-table-section/backers/badge.svg)](#backers) 
+[![Sponsors on Open Collective](https://opencollective.com/ios-swift-collapsible-table-section/sponsors/badge.svg)](#sponsors) 
+
 A simple iOS swift project demonstrates how to implement collapsible table section programmatically, that is no main storyboard, no XIB, no need to register nib, just pure Swift!
 
 In this project, the table view automatically resizes the height of the rows to fit the content in each cell, and the custom cell is also implemented programmatically.
@@ -224,6 +227,36 @@ Sometimes you might want to implement the collapsible cells in a grouped-style t
 <a href="https://paypal.me/jeantimex/3">
   <img alt="But Me a Coffee" src="https://az743702.vo.msecnd.net/cdn/kofi4.png?v=0" width="200" />
 </a>
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="graphs/contributors"><img src="https://opencollective.com/ios-swift-collapsible-table-section/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/ios-swift-collapsible-table-section#backer)]
+
+<a href="https://opencollective.com/ios-swift-collapsible-table-section#backers" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/ios-swift-collapsible-table-section#sponsor)]
+
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/0/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/1/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/2/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/3/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/4/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/5/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/6/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/7/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/8/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/9/website" target="_blank"><img src="https://opencollective.com/ios-swift-collapsible-table-section/sponsor/9/avatar.svg"></a>
+
+
 
 ## License ##
 
