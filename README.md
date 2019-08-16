@@ -1,6 +1,6 @@
 # How to Implement Collapsible Table Section in iOS
 
-[![Language](https://img.shields.io/badge/swift-4.2-brightgreen.svg?style=flat)]()
+[![Language](https://img.shields.io/badge/swift-5-brightgreen.svg?style=flat)]()
 [![Backers on Open Collective](https://opencollective.com/ios-swift-collapsible-table-section/backers/badge.svg)](#backers) 
 [![Sponsors on Open Collective](https://opencollective.com/ios-swift-collapsible-table-section/sponsors/badge.svg)](#sponsors) 
 
