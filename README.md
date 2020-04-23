@@ -230,8 +230,9 @@ Sometimes you might want to implement the collapsible cells in a grouped-style t
 ## Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<!--
 <a href="graphs/contributors"><img src="https://opencollective.com/ios-collapsible-table-section/contributors.svg?width=890" /></a>
-
+-->
 
 ## Backers
 
